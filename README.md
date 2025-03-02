@@ -79,11 +79,13 @@ Example: `$type cd` (output: `cd is a shell builtin`).
 
 ### Bash Shell
 Also known as Bourne Again Shell. Use `echo $SHELL` to check what shell is being used. Use `chsh` to change the default shell. You will be prompted for your password and then the new shell.  
+Other types of shells: Bourne Shell(sh), C Shell(csh or tcsh), Korn Shell(ksh), Z Shell(zsh)  
 Some features of the Bash shell include:
 - **Auto-completion**: Press `Tab` to auto-complete commands or file paths.
 - **Aliases**: Set shortcuts for commands.  
   Example: `alias dt=date`.  
-  Use `history` to check previously used commands and aliases.
+  To make this persist we can do `echo 'alias dt=date' >> /home/richard/.profile`  
+- Use `history` to check previously used commands and aliases.
 - **Environment Variables**: Use `env` to see all environment variables.  
   Example: `export NEW_VAR="value"`.
 - **Path Variable**: Use `echo $PATH` to check the PATH variable.  
@@ -93,4 +95,6 @@ Some features of the Bash shell include:
   Example: `export PATH=$PATH:/opt/obs/bin`.
 - **Custom Bash Prompt**: Customize the Bash prompt using `PS1`.  
   Example: `PS1="[\d \t \u@\h:\w ] $ "`  
-  Output: `Mon Mar 3 11:12:44 richard@ubuntu:~ ] $`.
+  Output: `Mon Mar 3 11:12:44 richard@ubuntu:~ ] $`.  
+  Note: These changes may not be persistent across sessions, so we should use the command line `>> ~/.profile` to the end of it.  
+  Example: ` echo 'PS1="[\d \t \u@\h:\w ] $ "' >> /home/richard/.profile` 
