@@ -21,46 +21,76 @@ Example: `$type cd` (output: `cd is a shell builtin`).
 ### Basic Linux Commands
 - `cd`: Change directory. Add the directory you want to move to as the argument.  
   Example: `$cd /home/richard/Food`.  
-  This can only go down the current working directory. In order to go up, use `cd ..` or to go straight to the home directory, use `cd ` without any arguments.
-- `mkdir`: Make directory. Add the name of the directory as the argument, and it will become a directory under the working directory.
+  This can only navigate down from the current working directory. To move up, use `cd ..`. To return to the home directory, use `cd` without any arguments.
+- `mkdir`: Make directory. Add the name of the directory as the argument, and it will become a directory under the working directory.  
   Example: `$mkdir Food`.  
-  If you want to add a directory into another directory that is not the current working one, you can do `$mkdir Food/Burger` to make a directory called Burger under the already made directory called Food. If the Food directory has not yet been made, add the option `-p` to make the parent directory as well under the working directory(`mkdir -p Food/burger`) 
+  To create a directory inside another directory that doesn’t exist yet, use the `-p` option:  
+  Example: `$mkdir -p Food/Burger`.
 - `pwd`: Print working directory.  
   Example: `$pwd` (output: `/home/richard`).
-- `ls`: List Storage command, lists everything inside a directory, no argument needed if you want to list storage from current, otherwise you can add argument to specify which directory you want to list out.
-You can add the option `-l` for long list, which provides more details such as who owns it and when it was last opened.
-You can also use the option `-a` which will list all files including the hidden ones. The single dot represents the current directory, and the double dot is the directory before it.
-The option `-lt` will list file in order created and `ltr` the reverse order. 
-- `pushd` and `popd`: Instead of `cd`, you can use `pushd` to move to another directory, but save the original working directory, no matter how many times you `cd` afterwards, using `popd` will imemdiately change to the original working directory.
-- `mv`: Move file or directory, requires two arguments, first one is the directory you want to move, and the second is the directory you want to move it into.
-Example: `mv /home/richard/Food/Fanta /Home/richard/Drink`  (Don't need /home/richard for either argument if you are already in that path.
-You can also use `mv` to rename a file/directory,
-Example: `mv Food/Burga Food/Burger`
-- `cp`: Copy file command. Takes in two arguments, the file first and then the directory you want to copy it to.  
-Example: `cp Food/Burger/Ingredients.txt Food/Sandwhich`  
-The option `-r` standing for recursive may be used to copy and then delete the previous directory.  
-- `rm`: Remove file or directory command. Simply add the file or directory you want to remove as the argument.  
-- `cat`: Read contents in a file, file name as the argument. The contents will be printed on screen.
-To change what is in a file, use the redirect option `>` after the cat. The system will then wait for an input from the user and you may type what you want to add in the file.
-Example: cat > Food/Burger/Ingredients.txt     (input: Lettuce) You then **ctrl + d** to save the data and exit the prompt.
-- `touch`: To add a new empty file. Name of file and what directory it is in for the argument.
-Example: `touch /home/richard/Food/Burger/Recipe.txt`
-- `more`: File as argument, used if the file is large and has a lot of content as it will enter a mode where certain buttons will do certain things.  
-**SpaceBar** will scroll the display one screenful of data at a time.  
-  **Enter** scrolls the display one line  
-  **b** scrolls the display backwards one screenful of data at a time  
-  **/** for searching text
-  **q** Quit out
-- `less`: Use file as argument, doesnt load everything at once.  
-**UPArrow** scrolls up the display one line  
-  **DOWNArrow** scrolls down the display one line  
-  **/** searches text  
-  **q** to quit out
+- `ls`: List storage. Lists everything inside a directory. No argument is needed to list the current directory.  
+  Example: `$ls /home/richard/Food`.  
+  Options:
+  - `-l`: Long list format (shows details like ownership and modification time).
+  - `-a`: Lists all files, including hidden ones.
+  - `-lt`: Lists files in order of creation.
+  - `-ltr`: Lists files in reverse order of creation.
+- `pushd` and `popd`: Save and navigate directories.  
+  - `pushd`: Saves the current directory and moves to a new one.  
+    Example: `$pushd /home/richard/Food` (saves `/home/richard` and moves to `/home/richard/Food`).
+  - `popd`: Returns to the saved directory.  
+    Example: `$popd` (returns to `/home/richard`).
+- `mv`: Move or rename files/directories. Requires two arguments: the source and the destination.  
+  Example: `$mv /home/richard/Food/Fanta /home/richard/Drink`.  
+  To rename: `$mv Food/Burga Food/Burger`.
+- `cp`: Copy files/directories. Requires two arguments: the source and the destination.  
+  Example: `$cp Food/Burger/Ingredients.txt Food/Sandwich`.  
+  Use `-r` (recursive) to copy directories.
+- `rm`: Remove files/directories. Add the file or directory as the argument.  
+  Example: `$rm Food/Burger/Ingredients.txt`.  
+  Use `-r` to remove directories.
+- `cat`: Read file contents. Add the file name as the argument.  
+  Example: `$cat Food/Burger/Ingredients.txt`.  
+  To edit: `$cat > Food/Burger/Ingredients.txt` (input: `Lettuce`), then press `Ctrl + D` to save.
+- `touch`: Create an empty file. Add the file name as the argument.  
+  Example: `$touch /home/richard/Food/Burger/Recipe.txt`.
+- `more`: View file contents page by page. Add the file name as the argument.  
+  Navigation:
+  - **Spacebar**: Scroll one screenful.
+  - **Enter**: Scroll one line.
+  - **b**: Scroll backward.
+  - **/**: Search text.
+  - **q**: Quit.
+- `less`: View file contents without loading the entire file. Add the file name as the argument.  
+  Navigation:
+  - **Up/Down Arrow**: Scroll one line.
+  - **/**: Search text.
+  - **q**: Quit.
 
-This is a lot to take in, luckily there are a few commands within linux to help remind us what a command does or how to use it.  
-`whatis`: takes a command as an argument and will display a one line description of what the command does.  
-`man`: Man page takes a command as an argument and gives a more detailed description.    
-Most commands comes with an option `--help` with a description and how to use it.    
-`apropos`: takes a keyword as an argument and will search through the man page names and descriptions for this keyword.
-  
+### Help Commands
+- `whatis`: Provides a one-line description of a command.  
+  Example: `$whatis ls`.
+- `man`: Displays the manual page for a command.  
+  Example: `$man ls`.
+- `--help`: Displays a brief description and usage options for a command.  
+  Example: `$ls --help`.
+- `apropos`: Searches the man pages for a keyword.  
+  Example: `$apropos list`.
 
+### Bash Shell
+Also known as Bourne Again Shell. Use `echo $SHELL` to check what shell is being used. Use `chsh` to change the default shell. You will be prompted for your password and then the new shell.  
+Some features of the Bash shell include:
+- **Auto-completion**: Press `Tab` to auto-complete commands or file paths.
+- **Aliases**: Set shortcuts for commands.  
+  Example: `alias dt=date`.  
+  Use `history` to check previously used commands and aliases.
+- **Environment Variables**: Use `env` to see all environment variables.  
+  Example: `export NEW_VAR="value"`.
+- **Path Variable**: Use `echo $PATH` to check the PATH variable.  
+  Use `which` to find the location of a program.  
+  Example: `which ls`.  
+  Add a new directory to PATH:  
+  Example: `export PATH=$PATH:/opt/obs/bin`.
+- **Custom Bash Prompt**: Customize the Bash prompt using `PS1`.  
+  Example: `PS1="[\d \t \u@\h:\w ] $ "`  
+  Output: `Mon Mar 3 11:12:44 richard@ubuntu:~ ] $`.
