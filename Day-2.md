@@ -142,6 +142,8 @@ There are two ways to initiate a Linux boot process:
      ```
    - Once systemd ensures that all required services are running properly, the boot sequence is complete, and the system is ready for user interaction.
 
+---
+
 ## Run levels
 
 Linux can run in multiple modes such as graphical mode. These modes are set by the run level.  
