@@ -1,6 +1,9 @@
 # Daily-Devop-Notes
 
-*Keeping track of what I learn each day on my way to become a DevOps Engineer. Commands will be represented by a $ sign before it.*
+*Keeping track of what I learn each day on my way to become a DevOps Engineer. Commands will be represented by a $ sign before it.*  
+
+## Table of Contents
+- [Day 1: Linux Basics and Core Concepts](#day-1-linux-basics-and-core-concepts)
 
 ## Day 1: Linux Basics and Core Concepts
 
@@ -149,3 +152,4 @@ The Linux Kernel is responsible for four main tasks:
   $ uname -r  # Displays the kernel release version
   $ uname -a  # Displays all system information (kernel name, version, hostname, etc.)
 
+[Day 1: Linux Basics and Core Concepts](#day-1-linux-basics-and-core-concepts)
