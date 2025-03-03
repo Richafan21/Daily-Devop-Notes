@@ -150,5 +150,82 @@ Linux can run in multiple modes such as graphical mode. These modes are set by t
 - Run level 3: Boots into a Command Line Interface(Systemd Targets:multiuser.target)
 
 ### Viewing and changing Systemd Target
-- `systtemctl get-default` gets the default system target  
+- `systemctl get-default` gets the default system target  
 - `systemctl set-default multi-user.target` to change the default target
+
+### File Types in Linux
+
+"Everything is a file in Linux" is a fundamental concept. There are three main types of files:
+
+#### 1. **Regular Files**
+   - These include images, scripts, configuration files, and data files.
+   - **Examples**:
+     - JPG files
+     - Shell scripts
+     - Code files
+
+#### 2. **Directories**
+   - Directories are special files that act as containers for other files and directories.
+   - **Examples**:
+     - `/home/richard`
+     - `/root`
+     - `/home/richard/code-directory`
+
+#### 3. **Special Files**
+   - **Character Files**: Devices under the `/dev` filesystem, such as a mouse or keyboard.
+   - **Block Files**: Block devices located under `/dev`, such as hard disks and RAM.
+   - **Links**:
+     - **Hard Links**: Associate two or more file names that share the same block of data on the physical disk. Deleting one link will delete the data.
+     - **Symbolic (Sym) Links**: Act as pointers to another file. Deleting the link won't delete the file.
+   - **Socket Files**: Enable communication between two processes.
+   - **Named Pipes**: Connect one process as an input to another. They are unidirectional (from the first process to the second).
+
+---
+
+### Identifying File Types
+
+- Use the `file` command with an argument to determine the file type:
+  ```bash
+  $ file myfile.txt
+- `ls` with the option `-ld` and an argument will show the file type with the initial character in the output.
+- d: Directory
+- -: Regular File
+- c: Character device
+- l: Link(symbolic or hard link)
+- s: Socket
+- p: Named Pipe
+- b: Block Device
+
+---
+
+## Filesystem Hierarchy
+
+### Key Directories and Purposes
+1. `/home`
+   - This directory holds the home directories for all users except the root user as the root user's home directory is located at `/root`.
+
+2. `/opt`
+  - Third party programs are typically installed here.
+
+3. `/mnt` and `/tmp`
+   - `/mnt` is used for temporarily mounting filesystems, whereas `/tmp` is reserved for storing temporary data.
+  
+4. `/media`
+   - Reserved for all external media such as USB drives.
+  
+5. `/dev`
+   - Contains special block and character device files. These files represent hardware devices such as external hard disks, mice, and keyboard.
+
+6. `/bin` and `/etc`
+   - Essential programs like `cp`, `mv`, `mkdir` reside in `/bin`. Meanwhile `/etc` is vital because it stores the majority of Linux config files.
+
+7. `/lib` and `/lib64`
+   - These directories store shared libraries required by programs during runtime.
+  
+8. `/usr`
+   - Modern Linux systems use `/usr` to store userland applications and their data. This directory contains software such as Firefox, Thunderbird mail, and vi editor.
+  
+9. `/var`
+    - Logs and cached data are stored in this directory for when issues arise and can help troubleshooting.
+  
+The `df` command or disk filesystem command is useful for viewing details about each mounted filesystem. Example: `df -hP`
