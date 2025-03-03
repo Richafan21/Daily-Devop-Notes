@@ -95,3 +95,60 @@
 - **`sudo` Command**:
   - Adding `sudo` before a command allows you to run it as the superuser (root), granting elevated privileges.
   - Not every user can run every command in Linux; `sudo` ensures proper access control.
+ 
+---
+
+## Linux Boot Sequence
+
+There are two ways to initiate a Linux boot process:
+1. Start a Linux device in a halted or stopped state.
+2. Reboot or reset a running system.
+
+### 4 Steps of the Linux Boot Process
+
+1. **BIOS POST**:
+   - **Initial stage**: POST stands for **Power On Self Test**.
+   - The BIOS runs a POST test to ensure that the hardware components attached to the device are functioning correctly.
+   - If the POST fails, the boot process stops, and an error message or beep code is displayed.
+
+2. **Boot Loader**:
+   - This stage begins only after a successful POST.
+   - The BIOS loads and executes the boot code from the designated boot device. For Linux, this is typically located in the first sector of the hard disk, within the `/boot` filesystem.
+   - The bootloader (e.g., GRUB2) displays a menu of boot options, such as:
+     - Microsoft Windows
+     - Ubuntu 24.04
+   - After the user selects an option, the bootloader:
+     - Loads the Linux kernel into memory.
+     - Passes required parameters to the kernel.
+     - Transfers control to the kernel.
+   - **GRUB2** is the most popular and standard bootloader for Linux systems.
+
+3. **Kernel Initialisation**:
+   - After the Linux kernel is loaded, it is decompressed (if compressed) and loaded into memory.
+   - The kernel begins execution and performs several critical tasks:
+     - **Hardware initialisation**: Detects and initialises hardware devices.
+     - **Memory management**: Sets up virtual memory and allocates memory for the system.
+   - Once the kernel is operational, it looks for the **INIT process** to run. This process is essential for setting up the environment before user-space initialisation.
+
+4. **Service Initialisation (INIT Process)**:
+   - Most modern Linux distributions use **systemd** as the INIT process.
+   - **systemd** is responsible for transitioning the system into a fully operational state.
+   - Key features of systemd:
+     - **Parallelisation**: Starts services in parallel, significantly reducing boot time.
+     - **Dependency management**: Ensures services start in the correct order based on dependencies.
+   - To check the INIT system used, run:
+     ```bash
+     $ ls -l /sbin/init
+     ```
+   - Once systemd ensures that all required services are running properly, the boot sequence is complete, and the system is ready for user interaction.
+
+## Run levels
+
+Linux can run in multiple modes such as graphical mode. These modes are set by the run level.  
+- `runlevel` command should return what run level you're running.
+- Run level 5: Boots into Graphical Interface(Systemd Targets:graphical.target)
+- Run level 3: Boots into a Command Line Interface(Systemd Targets:multiuser.target)
+
+### Viewing and changing Systemd Target
+- `systtemctl get-default` gets the default system target  
+- `systemctl set-default multi-user.target` to change the default target
