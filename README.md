@@ -2,7 +2,7 @@
 
 *Keeping track of what I learn each day on my way to become a DevOps Engineer. Commands will be represented by a $ sign before it.*
 
-## Day 1: Linux Basics
+## Day 1: Linux Basics and Core Concepts
 
 Linux shell is a program that allows text-based interactions between the program and the user.  
 The home directory (`/home/richard`) is like a dedicated locker assigned to you. Other users cannot access anything within your own home directory. By default, it is represented by `~`.
@@ -97,4 +97,55 @@ Some features of the Bash shell include:
   Example: `PS1="[\d \t \u@\h:\w ] $ "`  
   Output: `Mon Mar 3 11:12:44 richard@ubuntu:~ ] $`.  
   Note: These changes may not be persistent across sessions, so we should use the command line `>> ~/.profile` to the end of it.  
-  Example: ` echo 'PS1="[\d \t \u@\h:\w ] $ "' >> /home/richard/.profile` 
+  Example: ` echo 'PS1="[\d \t \u@\h:\w ] $ "' >> /home/richard/.profile`
+
+### Linux Kernel
+
+The Linux Kernel is the core component of the Linux operating system. It acts as the bridge between the hardware and the software, managing resources and ensuring that applications can run efficiently and securely. To better understand its role, let’s use an analogy:
+
+- **Library (OS)**: The entire system, including hardware and software.
+- **Books/Resources (Hardware Resources)**: CPU, memory, disk, network, etc.
+- **Students (Processes)**: Applications or programs running on the system.
+- **Librarian (Kernel)**: Manages access to resources, ensures fairness, and enforces rules.
+
+The Linux Kernel is responsible for four main tasks:
+
+1. **Memory Management**:
+   - The kernel keeps track of memory usage, ensuring that each process has access to the memory it needs without interfering with other processes.
+   - It handles **virtual memory**, which allows the system to use disk space as an extension of RAM when physical memory is full (a process known as **swapping**).
+   - It also enforces memory protection, preventing processes from accessing memory allocated to other processes.
+
+2. **Process Management**:
+   - The kernel decides which processes get access to the CPU, when, and for how long. This is known as **scheduling**.
+   - It handles process creation, termination, and communication (e.g., inter-process communication or IPC).
+   - The kernel ensures that processes run efficiently and fairly, even when multiple applications are competing for resources.
+
+3. **Device Drivers**:
+   - Device drivers act as translators between hardware devices (e.g., printers, keyboards, network cards) and the operating system.
+   - The kernel loads and manages these drivers, making hardware accessible to applications.
+   - Linux supports a wide range of hardware devices thanks to its modular design, allowing drivers to be loaded and unloaded dynamically as needed.
+
+4. **System Calls and Security**:
+   - System calls are the interface between user-space applications and the kernel. They allow programs to request services from the kernel, such as reading a file or creating a process.
+   - The kernel enforces security policies, such as file permissions, user privileges, and access control, to ensure the system remains secure.
+
+#### Kernel Space vs. User Space
+- **Kernel Space**:
+  - A privileged area where the kernel and device drivers operate.
+  - Direct access to hardware and system resources.
+  - Code running here has full control over the system.
+- **User Space**:
+  - Where applications and user processes run.
+  - Restricted access to hardware and system resources.
+  - Applications must request access via system calls.
+
+#### Monolithic and Modular Design
+- The Linux Kernel is **monolithic**, meaning all core components (memory management, process management, device drivers, etc.) run in a single address space.
+- However, it is also **modular**, allowing additional functionality to be loaded as kernel modules at runtime. This makes the kernel flexible and efficient, as only the necessary components are loaded into memory.
+
+#### Checking Kernel Information
+- Use the `uname` command to check kernel details:
+  ```bash
+  $ uname -r  # Displays the kernel release version
+  $ uname -a  # Displays all system information (kernel name, version, hostname, etc.)
+
