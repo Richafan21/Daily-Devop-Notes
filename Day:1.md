@@ -1,10 +1,3 @@
-# Daily-Devop-Notes
-
-*Keeping track of what I learn each day on my way to become a DevOps Engineer. Commands will be represented by a $ sign before it.*  
-
-## Table of Contents
-- [Day 1: Linux Basics and Core Concepts](#day-1-linux-basics-and-core-concepts)
-
 ## Day 1: Linux Basics and Core Concepts
 
 Linux shell is a program that allows text-based interactions between the program and the user.  
