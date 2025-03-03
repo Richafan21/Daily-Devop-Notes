@@ -152,4 +152,3 @@ The Linux Kernel is responsible for four main tasks:
   $ uname -r  # Displays the kernel release version
   $ uname -a  # Displays all system information (kernel name, version, hostname, etc.)
 
-[Day 1: Linux Basics and Core Concepts](#day-1-linux-basics-and-core-concepts)
