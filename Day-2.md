@@ -1,4 +1,4 @@
-# Day 2: Linux Kernel and Package Management
+# Day 2: Linux Kernel, File types, and File System Hierarchy
 
 ## Kernel Space and User Space
 
