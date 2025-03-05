@@ -35,3 +35,116 @@ Types of Package Managers:
 
 ## RPM and YUM
 
+This section covers **RPM** and **YUM**, the two primary package managers for RPM-based Linux distributions. These tools handle software installation, updates, removal, and dependency management.
+
+### RPM (Red Hat Package Manager)
+
+RPM is the core package manager for Red Hat Enterprise Linux(RHEL), CentOS, Fedora, and similar distributions. It manages `.rpm` packages and supports essential operations:
+
+### Basic RPM Commands
+
+- **Install a package:**
+  ```bash
+  rpm -ivh package.rpm
+  ```
+  - `-i`: Install the package.
+  - `-v`: Verbose mode.
+  - `-h`: Show progress.
+
+- **Uninstall a package:**
+  ```bash
+  rpm -e package
+  ```
+
+- **Upgrade an existing package:**
+  ```bash
+  rpm -Uvh package.rpm
+  ```
+  - `-U`: Upgrade (replaces older versions).
+
+- **Query installed packages:**
+  ```bash
+  rpm -q package
+  ```
+
+- **Verify installed package integrity:**
+  ```bash
+  rpm -V package
+  ```
+  - Ensures files haven't been modified from their original version.
+
+### Limitations of RPM
+
+RPM does **not** automatically resolve dependencies, which can lead to "dependency hell." This is where **YUM** comes in.
+
+---
+
+### YUM (Yellowdog Updater Modified)
+
+YUM simplifies package management by handling dependencies automatically. It retrieves software from repositories, ensuring smoother installation and updates.
+
+### Key Features of YUM
+
+- **Automatic dependency resolution**
+- **Access to remote repositories**
+- **Batch updates & installations**
+- **Easier package searching**
+
+### YUM Configuration
+
+YUM repositories are defined in `.repo` files located in:
+```bash
+/etc/yum.repos.d/
+```
+Repositories can be:
+- **Official (default system repositories)**
+- **Third-party (e.g., EPEL, Remi, NGINX)**
+- **Local (self-hosted RPM packages)**
+
+### Common YUM Commands
+
+| Command | Purpose |
+|---------|---------|
+| `yum repolist` | List available repositories |
+| `yum search package` | Find a package |
+| `yum install package` | Install a package |
+| `yum remove package` | Uninstall a package |
+| `yum update` | Update all packages |
+| `yum update package` | Update a specific package |
+| `yum provides /path/to/file` | Find which package owns a file |
+
+### Example: Listing Repositories
+```bash
+$ yum repolist
+Repo ID                    Repo Name                          Status
+base/7/x86_64              CentOS-7 - Base                   10,000+
+epel/x86_64                Extra Packages for Enterprise     13,000+
+extras/7/x86_64            CentOS-7 - Extras                   300+
+```
+
+### Example: Installing a Package
+```bash
+$ yum install httpd
+```
+
+### Example: Updating All Packages
+```bash
+$ yum update
+Transaction Summary
+=================================================
+Install    ( 4 Dependent packages )
+Upgrade    ( 78 Packages )
+Total download size: 64M
+Is this ok [y/N]: y
+```
+
+### Best Practices
+
+- **Always review** the transaction summary before confirming installations/updates.
+- **Enable security updates** to keep the system secure.
+- **Use `yum clean all`** periodically to free up disk space by clearing metadata and cache.
+- **Prefer YUM over RPM** for most package management tasks to avoid dependency issues.
+
+By combining **RPM** for direct package control and **YUM** for automated dependency handling, Linux package management becomes efficient and scalable.
+
+
