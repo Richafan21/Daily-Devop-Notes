@@ -181,3 +181,99 @@ grep -A2 -B2 "ERROR" logs.txt  # Shows 2 lines before and after each match
 | `grep "pattern" file.txt` | Searches for a text pattern in a file |
 | `grep -R "pattern" /dir` | Searches recursively in a directory |
 
+---
+
+## IO Redirection
+
+Every Linux command ran is automaticaly associated with three primary data streams.  
+
+### The Three Primary Data Streams
+
+- **STDIN**: The standard input stream that accepts text input.
+- **STDOUT**: The standard output stream that displays text output on your screen.
+- **STDERR**: The standard error stream that shows error messages.
+
+Example of using the `cat` command and working:
+
+```sh
+[~]$ cat sample_text.txt
+This is the file contents
+```
+
+If you attempt to access a file that does not exist, the error message is directed to STDERR:
+
+```sh
+[~]$ cat sample_text.txt
+This is the file contents
+cat: sample_text.txt: No such file or directory
+```
+
+### Redirecting Output and Errors
+To control where output goes, use redirection:
+
+- `>` writes STDOUT to a file (overwriting it).
+- `>>` appends STDOUT to a file.
+- `2>` writes STDERR to a file.
+- `2>>` appends STDERR to a file.
+
+Example:
+
+```sh
+[~]$ echo $SHELL > shell.txt  # Save output
+[~]$ echo "Using Bash shell" >> shell.txt  # Append message
+[~]$ cat shell.txt
+/bin/bash
+Using Bash shell
+```
+
+To capture errors separately:
+
+```sh
+[~]$ cat missing_file 2> errors.txt  # Save errors to file
+[~]$ cat errors.txt
+cat: missing_file: No such file or directory
+```
+
+To discard errors, redirect STDERR to `/dev/null`:
+
+```sh
+[~]$ cat missing_file 2> /dev/null
+```
+
+### Using Pipes (`|`) to Chain Commands
+Pipes let you send the output of one command directly to another. For example:
+
+```sh
+command1 | command2
+```
+
+Instead of saving output to a file and then viewing it, use a pipe:
+
+```sh
+[~]$ grep "Hello" sample.txt | less
+```
+
+### The `tee` Command: Save and Display Simultaneously
+Use `tee` to send output to both a file and the screen:
+
+```sh
+[~]$ echo $SHELL | tee shell.txt
+/bin/bash
+```
+
+To append instead of overwrite:
+
+```sh
+[~]$ echo "Another line" | tee -a shell.txt
+```
+
+### Quick Reference Table
+
+| Technique | Purpose | Example Command |
+|-----------|---------|----------------|
+| Redirect STDOUT | Send command output to a file | `echo $SHELL > shell.txt` |
+| Append STDOUT | Append command output to an existing file | `echo $SHELL >> shell.txt` |
+| Redirect STDERR | Send error messages to a file | `cat missing_file 2> error.txt` |
+| Append STDERR | Append error messages to an existing file | `cat missing_file 2>> error.txt` |
+| Use Pipes | Pass output from one command as input to another | `grep Hello sample.txt | less` |
+| Utilize `tee` Command | Duplicate output to file and screen simultaneously | `echo $SHELL | tee shell.txt; echo $SHELL | tee -a shell.txt` |
