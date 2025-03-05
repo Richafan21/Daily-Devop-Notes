@@ -21,7 +21,7 @@ Some essential functions of a package manager include:
 - Ensuring Package integrity and authenticity by verifying their digital certificates.
 - Simplifying the entire package management process.
 - Grouping packages by function to reduce user confusion.
-- Managing dependencies to ensure a package is installed alongside all packages it requires to run proerply, to avoid dependency hell.
+- Managing dependencies to ensure a package is installed alongside all packages it requires to run properly, to avoid dependency hell.
 
 Types of Package Managers:  
 - **DPKG**: Base package manager for Debian-based distributions.
