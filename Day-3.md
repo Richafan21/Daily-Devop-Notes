@@ -145,6 +145,104 @@ Is this ok [y/N]: y
 - **Use `yum clean all`** periodically to free up disk space by clearing metadata and cache.
 - **Prefer YUM over RPM** for most package management tasks to avoid dependency issues.
 
-By combining **RPM** for direct package control and **YUM** for automated dependency handling, Linux package management becomes efficient and scalable.
+By combining **RPM** for direct package control and **YUM** for automated dependency handling, Linux package management becomes efficient and scalable. 
+
+## DPKG and APT
+
+This guide covers **DPKG** and **APT**, two essential package management tools for Debian-based distributions like Ubuntu, Linux Mint, and PureOS. **DPKG** is a low-level package manager for handling `.deb` files, while **APT** is a higher-level tool that automates dependency management and simplifies software installation.
+
+### DPKG (Debian Package Manager)
+
+DPKG is similar to **RPM** on Red Hat-based systems. It provides direct control over `.deb` packages but **does not** handle dependencies automatically. If required dependencies are missing, installations may fail.
+
+### Basic DPKG Commands
+
+- **Install a package:**
+  ```bash
+  dpkg -i package.deb
+  ```
+- **Remove a package:**
+  ```bash
+  dpkg -r package
+  ```
+- **List installed packages:**
+  ```bash
+  dpkg -l package
+  ```
+- **Check package status:**
+  ```bash
+  dpkg -s package
+  ```
+
+### DPKG Dependency Issues
+
+Since DPKG does not resolve dependencies, installing a package may result in errors:
+```bash
+$ dpkg -i gimp.deb
+...
+dpkg: dependency problems prevent configuration of gimp:
+ gimp depends on libgimp2.0 (>= 2.10.8); however:
+ Version of libgimp2.0 on system is 2.8.22-1.
+dpkg: error processing package gimp (--install):
+ dependency problems - leaving unconfigured
+```
+In such cases, dependencies must be installed manually or resolved using **APT**.
+
+---
+
+### APT (Advanced Package Tool)
+
+APT is a high-level package manager that simplifies software installation by **automatically resolving dependencies**. It functions similarly to **YUM** on Red Hat-based systems, leveraging DPKG while managing repositories and dependencies.
+
+### Key Features of APT
+- **Automatic dependency resolution**
+- **Simplifies package installation and removal**
+- **Manages software repositories**
+- **Batch updates and system upgrades**
+
+### Common APT Commands
+
+| Command | Purpose |
+|---------|---------|
+| `apt update` | Refresh package lists from repositories |
+| `apt upgrade` | Upgrade all installed packages |
+| `apt install package` | Install a package with dependencies |
+| `apt remove package` | Remove an installed package |
+| `apt search package` | Search for a package in the repository |
+
+### Repository Management
+APT uses repositories defined in:
+```bash
+/etc/apt/sources.list
+```
+These can point to:
+- **Official repositories** (default system sources)
+- **Third-party repositories** (e.g., PPAs for Ubuntu)
+- **Local sources** (CD-ROMs or internal mirrors)
+
+To edit sources manually:
+```bash
+sudo nano /etc/apt/sources.list
+```
+Or use the command:
+```bash
+apt edit-sources
+```
+
+### Example: Installing GIMP with APT
+Instead of using `dpkg -i gimp.deb`, APT simplifies the process:
+```bash
+sudo apt install gimp
+```
+APT ensures all necessary dependencies are installed automatically.
+
+### Best Practices
+- **Always run `apt update`** before installing software to ensure you have the latest package lists.
+- **Use `apt upgrade` regularly** to keep your system secure and up to date.
+- **Prefer `apt install` over `dpkg -i`** to avoid dependency issues.
+- **Use `apt autoremove`** to clean up unused dependencies.
+
+By combining **DPKG** for direct package control and **APT** for dependency management, Debian-based systems achieve a powerful and efficient software management system.
+
 
 
