@@ -160,7 +160,7 @@ These tools help diagnose DNS issues and verify correct resolution.
 
 ---
 
-##Networking Basics
+## Networking Basics
 
 ### Switches and Local Networks
 A switch creates a local network by connecting multiple devices. Each device (host) requires a network interface, either physical or virtual, to connect. To view a host’s network interfaces, use:
