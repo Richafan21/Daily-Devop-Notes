@@ -54,7 +54,7 @@ EOF
 
 However, as networks grow, updating every system manually becomes impractical. Instead, a **centralized DNS server** allows all hosts to query a single point for name resolution.
 
-#### Configuring DNS Resolution
+### Configuring DNS Resolution
 
 To use a DNS server (e.g., `192.168.1.100`), update `/etc/resolv.conf`:
 
@@ -105,7 +105,7 @@ DNS follows a hierarchical structure:
 - **Root (`.`)** → **TLDs (`.com`, `.net`)** → **Subdomains (`mail.google.com`)**
 - Internal domains follow a similar structure, e.g., `web.mycompany.com`, `mail.mycompany.com`.
 
-#### Search Domains
+### Search Domains
 
 To simplify hostname resolution, add search domains in `/etc/resolv.conf`:
 
@@ -151,7 +151,98 @@ Example `dig` output:
 www.google.com. 245 IN A 64.233.177.103
 www.google.com. 245 IN A 64.233.177.105
 ...
+
+
 ;; SERVER: 8.8.8.8#53(8.8.8.8)
 ```
 
 These tools help diagnose DNS issues and verify correct resolution.
+
+---
+
+##Networking Basics
+
+### Switches and Local Networks
+A switch creates a local network by connecting multiple devices. Each device (host) requires a network interface, either physical or virtual, to connect. To view a host’s network interfaces, use:
+
+```bash
+ip link
+```
+Example output for `eth0`:
+
+```bash
+eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+```
+
+### Assigning IP Addresses
+If the network address is `192.168.1.0`, devices will receive IPs from this range. To assign IPs, first ensure the `eth0` interface is active:
+
+```bash
+ip addr add 192.168.1.10/24 dev eth0  # Device A
+ip addr add 192.168.1.11/24 dev eth0  # Device B
+```
+
+With IPs assigned, devices can communicate via the switch. To test connectivity, use:
+
+```bash
+ping 192.168.1.11
+```
+
+### Connecting Multiple Networks with a Router
+Now consider another network (`192.168.2.0`), where:
+- Device C: `192.168.2.10`
+- Device D: `192.168.2.11`
+
+To enable communication between `192.168.1.0` and `192.168.2.0`, a **router** is required. The router has:
+- `192.168.1.1` (first network)
+- `192.168.2.1` (second network)
+
+When device B (`192.168.1.11`) needs to reach C (`192.168.2.10`), it must forward packets via the router. This requires configuring a route:
+
+```bash
+ip route add 192.168.2.0/24 via 192.168.1.1
+```
+Similarly, device C needs a route to `192.168.1.0` via `192.168.2.1`:
+
+```bash
+ip route add 192.168.1.0/24 via 192.168.2.1
+```
+
+### Viewing and Configuring Routes
+To check the routing table, use:
+
+```bash
+route
+```
+Example routing table:
+
+```bash
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.1.0     192.168.2.1     255.255.255.0   UG    0      0        0 eth0
+0.0.0.0         192.168.2.1     255.255.255.255 UG    0      0        0 eth0
+```
+
+A default gateway allows devices to route unknown traffic through the router:
+
+```bash
+ip route add default via 192.168.2.1
+```
+
+### Troubleshooting and Persistence
+If routing issues occur, verify the routing table and update incorrect entries:
+
+```bash
+ip route add 192.168.1.0/24 via 192.168.2.2
+```
+
+**Note:** These changes are temporary and will be lost on reboot. To persist, update network configuration files (e.g., `/etc/network/interfaces`).
+
+### Key Commands Summary
+
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `ip link` | List network interfaces | `ip link` |
+| `ip addr` | Display IP addresses | `ip addr` |
+| `ip addr add` | Assign an IP address | `ip addr add 192.168.1.10/24 dev eth0` |
+| `route` | View routing table | `route` |
+| `ip route add` | Add a routing entry | `ip route add default via 192.168.2.1` |
