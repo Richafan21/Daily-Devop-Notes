@@ -89,7 +89,7 @@ Key findings:
 
 ### Step 5: Troubleshoot the Repository Server
 
-Since the issue is likely on the server, Jackie collaborated with the support team for further diagnostics.
+Using the examples above, we can deduce that the issue is likely on the server.
 
 ### Check if the HTTP Service is Running
 
