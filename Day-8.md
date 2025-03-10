@@ -194,4 +194,4 @@ Let's say we are trying to transfer a file named 'richard-code.tar.gz from our l
 richard@creators password:
 richard-code.tar.gz 
 ```
-If you want to transfer entire directories, include the `-r` option to copy recursively. To maintain original file ownership and permissions, ahh the `-p` flag.
+If you want to transfer entire directories, include the `-r` option to copy recursively. To maintain original file ownership and permissions, add the `-p` flag.
