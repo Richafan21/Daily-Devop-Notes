@@ -189,8 +189,9 @@ SCP stands for secure copy. This is a powerful tool for transferring files and d
 
 Let's say we are trying to transfer a file named 'richard-code.tar.gz from our laptops to the same directory on a remote server(devapp01), you can do it by:  
 
+```bash
 [richard@fann-lp10 ~]$ scp /home/richard/fan-code.tar.gz devapp01:/home/richard
-richard@creators's password:
+richard@creators password:
 richard-code.tar.gz 
-
+```
 If you want to transfer entire directories, include the `-r` option to copy recursively. To maintain original file ownership and permissions, ahh the `-p` flag.
