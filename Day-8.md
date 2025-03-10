@@ -113,7 +113,7 @@ chmod 555 test-file # Grants read ad execute permissions to everyone.
 chmod 660 test-file # Grants read and write permissions to owner and group, but none to others.
 ```
 
-### Changing ownershup with chown and chgrp.
+### Changing ownership with chown and chgrp.
 
 To change both the owner and group of a file, use `chown`.
 `chown (owner):(group) (file_name)`  
@@ -125,7 +125,7 @@ To change just the group, use `chgrp`:
 ## SSH
 
 SSH stands for secure shell, and it is a widely used protocol for logging in remotely and executing commands on another computer.  
-You can use ssh via `ssh <hostname OR IP address>`. You can soecify the username using the `user@` syntax or the `-l` flag. `ssh <user>@<hostname OR IP address>`
+You can use ssh via `ssh <hostname OR IP address>`. You can specify the username using the `user@` syntax or the `-l` flag. `ssh <user>@<hostname OR IP address>`
 
 Example for conecting to a server with hostname "devapp01"
 ```bash
@@ -179,7 +179,7 @@ During this process, the public key is stored in `/home/richard/.ssh/id_rsa.pub`
 
 ### Copying the Public Key to the Remote server
 
-To enable passwordless SSH login, copy your public ket to the remote server using the `ssh-copy-id` and an argument such as `richard@fan` command. 
+To enable passwordless SSH login, copy your public key to the remote server using the `ssh-copy-id` and an argument such as `richard@fan` command. 
 
 ## SCP
 
