@@ -122,6 +122,75 @@ If you need to change the owner:
 To change just the group, use `chgrp`:
 `chgrp (group_name) (file_name)`
 
+## SSH
 
+SSH stands for secure shell, and it is a widely used protocol for logging in remotely and executing commands on another computer.  
+You can use ssh via `ssh <hostname OR IP address>`. You can soecify the username using the `user@` syntax or the `-l` flag. `ssh <user>@<hostname OR IP address>`
 
- 
+Example for conecting to a server with hostname "devapp01"
+```bash
+ssh <hostname_OR_IP_Address>
+ssh <user>@<hostname_OR_IP_Address>
+ssh -l <user> <hostname_OR_IP_Address>
+[~]$ ssh devapp01
+richard@devapp01s password:
+Last login: Tue Apr  7 20:08:58 2020 from 192.168.1.109
+[richard@devapp01 ~]$
+```
+
+### Passwordless SSH with Key Pairs
+
+You can avoid entering your password every time by configuring a passwordless authentication using SSH key pairs. A key pair consists of:
+- **Private key**: Kept secure on your client device.
+- **Public key**: Shared and installed on your remote server.
+
+When the public key is added to the remote server's `~/.ssh/authorized_keys` file, the system will grant access to any client possessing the corresponding private key.
+
+### Generating the key pair.  
+
+On your client machine, generate a key pair using the following command. You can optionally secure your key with a passphrase, through that will prompt you to enter it everytime the key is utilized.
+
+```bash
+[richard@fan-lp10 ~]$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/richard/.ssh/id_rsa):
+/home/richard/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/richard/.ssh/id_rsa.
+Your public key has been saved in /home/richard/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:PCRTdbxzzffzmi8uunjn5V/1LZCG0BvhVJYXBr9gYsE richard@fan-lp10
+The keys randomart image is:
++---[RSA 2048]----+
+|          o oo   |
+|         +E=oo   |
+|        o O *..o. |
+|         =o .o..  |
+|        S O + .+  |
+|         . . *    |
+|          oo+     |
+|           oo.+.  |
+|          ..o+o   |
++----[SHA256]-----+
+```
+During this process, the public key is stored in `/home/richard/.ssh/id_rsa.pub`. While the private key remains safe in `/home/richard/.ssh/id_rsa`.
+
+### Copying the Public Key to the Remote server
+
+To enable passwordless SSH login, copy your public ket to the remote server using the `ssh-copy-id` and an argument such as `richard@fan` command. 
+
+## SCP
+
+SCP stands for secure copy. This is a powerful tool for transferring files and directoriessecurely over SSH. Acts like `cp` in Linux.
+
+### Copying a file using SCP.
+
+Let's say we are trying to transfer a file named 'richard-code.tar.gz from our laptops to the same directory on a remote server(devapp01), you can do it by:  
+
+[richard@fann-lp10 ~]$ scp /home/richard/fan-code.tar.gz devapp01:/home/richard
+richard@creators's password:
+richard-code.tar.gz 
+
+If you want to transfer entire directories, include the `-r` option to copy recursively. To maintain original file ownership and permissions, ahh the `-p` flag.
