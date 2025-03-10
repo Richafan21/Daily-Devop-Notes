@@ -81,7 +81,7 @@ For each permissions set:
 
 This means that `rwx` = 7(4+2+1), `r-x` = 5(4+0+1)
 
-###Changing File Permissions with `chmod`
+### Changing File Permissions with `chmod`
 
 There are two modes to modify file permissions using `chmod`.
 
