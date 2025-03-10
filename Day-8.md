@@ -183,7 +183,7 @@ To enable passwordless SSH login, copy your public key to the remote server usin
 
 ## SCP
 
-SCP stands for secure copy. This is a powerful tool for transferring files and directoriessecurely over SSH. Acts like `cp` in Linux.
+SCP stands for secure copy. This is a powerful tool for transferring files and directories securely over SSH. Acts like `cp` in Linux.
 
 ### Copying a file using SCP.
 
