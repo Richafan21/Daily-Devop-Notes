@@ -70,3 +70,82 @@ Example:
 A packet from client 01 meets the first rule in the INPUT chain and is accepted.  
 A packet from client 02 does not match the first rule and is evaluated by subsequent rules.  
 A packet from client 05 might not match any allow rules and is eventually dropped by a default drop rule
+
+---
+
+## Iptables Securing the Environment
+
+### Configuring SSH Access
+
+Start by adding an incoming rule on the development server that allows SSH connections solely from the designated client. Run:
+
+`iptables -A INPUT -p tcp -s 172.16.238.187 --dport 22 -j ACCEPT`
+
+This is how the command works:  
+- `-A INPUT`: Appends a rule to the INPUT chain.
+- `-p tcp`: Specifies the TCP protocol.
+- `-s 172.16.238.187`: Restricts the rule to connections coming from the client laptop.
+- `--dport 22`: Indicates that the rule applies to the SSH port (22).
+- `-j ACCEPT` Accepts the connection when all conditions are met.  
+
+After adding the rule, verify it by listing the iptables rules with:  
+`iptables -L`
+
+### Blocking Unauthorised SSH Attempts
+
+By default, if another client tries to access SSH without a specific allow rule, the connection would follow the default policy, which typically accepts all connections.  
+Since our requirement is to restrict the SSH access to the specific client, add a rule that drops SSH traffic from all other sources:
+
+`iptables -A INPUT -p tcp --dport 22 -j DROP`
+
+Lising the iptables rules now will display an output like this:  
+```bash
+[richard@devapp01 ~]$ iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+ACCEPT     tcp  --  172.16.238.187      anywhere             tcp dpt:ssh
+DROP       tcp  --  anywhere             anywhere             tcp dpt:ssh
+
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+```
+
+### Configuring Outbound Traffic
+
+On the development application server, additional configurations are needed to manage outbound connections:  
+- Allow connections to the DB server on port 5432.
+- Permit connections to the software repository server on port 80.
+- Drop general HTTP (port 80) and HTTPS (port 443) traffic to the Internet.
+- Explicitly allow HTTP access on port 80 from the client laptop.
+- Add the following OUTPUT rules:
+```bash
+[richard@devapp01 ~]$ iptables -A OUTPUT -p tcp -d 172.16.238.11 --dport 5432 -j ACCEPT
+[richard@devapp01 ~]$ iptables -A OUTPUT -p tcp -d 172.16.238.15 --dport 80 -j ACCEPT
+[richard@devapp01 ~]$ iptables -A OUTPUT -p tcp --dport 443 -j DROP
+[richard@devapp01 ~]$ iptables -A OUTPUT -p tcp --dport 80 -j DROP
+```
+Once these rules are applied, listing the iptables configuration will reveal three input rules and four output rules.  
+This ensures that only the specified outbound communications are permitted.
+
+## Allowing Specific HTTPS Traffic
+
+If you need to access a particular site using HTTPS from the devapp-01 server (e.g., to 172.16.238.100), the general DROP rule for port 443 would normally block this connection. To allow HTTPS access to this specific destination, insert an ACCEPT rule at the top of the OUTPUT chain:
+
+`[richard@devapp01 ~]$ iptables -I OUTPUT -p tcp -d 172.16.238.100 --dport 443 -j ACCEPT`  
+The -I option inserts the rule at the top of the chain, making sure it takes precedence over the subsequent DROP rules.
+
+### Deleting a Rule
+
+The `-D` option can let you delete a rule based on position:  
+`[richard@devapp01 ~]$ iptables -D OUTPUT 3`  
+The above command will delete the rule at position 3 of the output chain.
+
+
+
+
+
