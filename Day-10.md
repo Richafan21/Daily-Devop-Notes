@@ -1,8 +1,6 @@
-# Service Management
+# Cronjobs
 
 ---
-
-## Cronjobs
 
 With Cron, you can schedule tasks in Linux as Cron allows you to automate commands by specifying the date, time, and frequency for execution.  
 Once configured, the cron daemon runs the task without human intervention, maing system maintenance efficient and reliable.  
