@@ -1,4 +1,4 @@
-# Service Management and Storage in Linux
+# Service Management
 
 ---
 
