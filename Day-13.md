@@ -4,7 +4,7 @@
 
 ## Disk Partitions
 
-### Block Ddevices
+### Block Devices
 
 Remember that a Block device a file type under the `/dev` directory and denotes a hardware component used for data storage.  
 Solid-state disk(SSD) is an example of a block storage in Linux. It is called block storage because data is read or written in blocks or chunks of space.  
@@ -33,7 +33,7 @@ The minor numbers differentiate among individual physical or logical devices, su
 
 ### Disk Partitions
 
-Taking a closer look at the output of `lsblock` from before, we can see that the SSD disk is divided into three partitions:  
+Taking a closer look at the output of `lsblk` from before, we can see that the SSD disk is divided into three partitions:  
 1. `sda3` is used as the root partition.
 2. `sda2` (72.5GB) is mounted at /media/MM/Data and is typically used for storing backup data.
 3. `sda1` is mounted at /boot/efi to store boot loader files needed during system startup.
@@ -56,7 +56,7 @@ Device        Start       End   Sectors Size Type
 /dev/sda3   150194176 247955455 97761280 46.6G Linux filesystem
 ```
 
-## Partitioning Schemes
+### Partitioning Schemes
 
 There are three primary types of disk partitions:
 
@@ -70,7 +70,7 @@ In contrast, GPT (GUID Partition Table) supports an almost unlimited number of p
 such as RHEL’s limit of 128 partitions per disk—and eliminates the 2TB disk size restriction. So Unless the operating system requires MBR,  
 GPT is generally the preferred choice due to its enhanced capacity and flexibility.
 
-## Creating a New Partition with GPT
+### Creating a New Partition with GPT
 
 `gdisk` can be used to create a new partition:  
 ```bash
@@ -101,4 +101,57 @@ Command (? for help):
 Within the `gdisk` interface, you can enter `?` to view all available commands. To add a new partition, press `n` and follow the interactive prompts.  
 After providing the details and confirming with the default hexcode(8300 for Linux filesystem), finalise the changes by writing the new partition table  
 to disk. Press `w` at the prompt. After this, the new partition `/dev/sdb1` is now available. Verify the partition creation using `lsblk` or `fdisk -l`.
+
+---
+
+## File Systems
+
+To make a disk usable in Linux, we need to create file systems. After partitioning divides a disk into segments of usable space,  
+the Linux kernel still treats these partitions as raw disk areas. To read and write data, you must create a file system that defines  
+the storage structure and then mount that file system to a directory.  For this section, we will focus on the extended file system family.  
+
+### Comparing ext2, ext3, and ext4
+
+Both ext2 and ext3 file systems support a maximum file size of 2 TB and a maximum volume size of 4 TB. While they efficiently store data,  
+ext2 may experience long boot times after an unclean shutdown such as a power outage.  
+In contrast, ext3 adds journaling features that enable a faster system startup following such events.  
+Ext4 further enhances these capabilities and is one of the most popular general-purpose file systems today—it supports files up to 16 TB and volumes as large as 1 exabyte.  
+Additionally, ext4 (as well as ext3) offers backward compatibility: a file system created with ext4 can be mounted as ext3 or ext2, and an ext3 file system can be mounted as ext2.
+
+### Creating and Mounting an ext4 File System
+
+To create an ext4 file system on the device /dev/sdb1:  
+1. Use the mkfs.ext4 command to format the device.
+2. Create a mount point directory.
+3. Mount the file system.
+```bash
+[~]$ mkfs.ext4 /dev/sdb1
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+
+[~]$ mkdir /mnt/ext4
+[~]$ mount /dev/sdb1 /mnt/ext4
+```
+
+### Verifying the Mounted File System
+
+You can confirm that the file system is mounted correctly by using the mount command combined with grep:
+
+``` [~]$ mount | grep /dev/sdb1```  
+```/dev/sdb1 on /mnt/ext4 type ext4 (rw,relatime,data=ordered)```
+
+### Configuring Automatic Mounting at Boot
+
+To automatically mount the file system during system boot, add an entry to the /etc/fstab file. This enables persistent mounting and ensures the file system is available after a reboot. For example:
+```bash
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+/dev/sda1  /  ext4  defaults,relatime,errors=panic  0  1
+```
 
