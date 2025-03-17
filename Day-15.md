@@ -20,25 +20,47 @@ Like other programming languages, Bash has three main data types that can be ass
 - Intergers: `echo "In 10 years it will be $((year + 10))`
 - Arrays: There are two types of arrays, **indexed** and **associative**
 
-### Arrays
+## Arrays
 
-**Indexed** Arrays:
+### Indexed Arrays:
 To assign an array to a variable: 
 ```bash
 sports=("basketball" "football" "tennis")
 echo ${sports}
 # Output = basketball
 ```
-As you can see, when calling the variable, it will only output what is on the first index as bash defaults to `${sports[0]}
+As you can see, when calling the variable, it will only output what is on the first index as bash defaults to `${sports[0]}`
 
-To print all elements use the @ or * signs: 
+To print all elements use the `@` or `* `signs: 
 ```bash
 sports=("basketball" "football" "tennis")
 echo ${sports[*]}
 # Output = basketball football tennis
 ```
-* will keep the elements in a single string, while @ will keep them seperate.
+`*` will keep the elements in a single string, while `@ `will keep them seperate.
 
 
+### Associated Arrays
 
+To assign an associative array to a variable, you use key-value pairs:
 
+```bash
+declare -A sports
+sports["basketball"]="team sport"
+sports["football"]="team sport"
+sports["tennis"]="individual sport"
+echo ${sports["basketball"]}
+# Output = team sport
+```
+
+In associative arrays, you reference the values by their keys, not by numeric indices. To print all key-value pairs, use the `@` sign:
+```bash
+echo ${sports[@]}
+# Output = team sport team sport individual sport
+```
+
+To print just the keys, use `!`:
+```bash
+echo ${!sports[@]}
+# Output = basketball football tennis
+```
