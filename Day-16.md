@@ -56,7 +56,7 @@ fi
 ```
 
 Example:
-```
+```bash
 #!/bin/bash
 name="Richard"
 if [ "$name" = "Richard" ]
@@ -64,6 +64,21 @@ then
     echo "Hello, Richard!"
 else
     echo "You're not Richard."
+fi
+```
+
+### For Logical Operators:
+```bash
+&& # AND
+|| # OR
+! # NOT
+```
+
+Example:
+```bash
+if [ $age -ge 21 ] && [ "$name" = "Richard" ]
+then
+    echo "Hello, adult Richard!"
 fi
 ```
 
