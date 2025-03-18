@@ -1,4 +1,4 @@
-# If Statments in Bash
+# If Statements in Bash
 
 ---
 
