@@ -33,7 +33,6 @@ echo "Another line" >> output.txt
 **Redirecting Input:**
 ```bash
 sort < unsorted_list.txt
-- **Overwrite**:
 ```
 
 **Redirecting Error**
