@@ -56,7 +56,7 @@ While VMs provide full isolation by running separate operating systems, they con
 
 ## Leveraging Docker Images and Containers
 
-Organizations worldwide have embraced Docker, publishing images in repositories like Docker Hub. These images encompass various operating systems, databases, and tools. With Docker installed, launching an application is straightforward:
+With Docker installed, launching an application is straightforward:
 
 ```bash
 docker run ansible
@@ -65,5 +65,5 @@ docker run redis
 docker run nodejs
 ```
 
-If a container fails, it can be effortlessly replaced, ensuring minimal downtime. Developers and operations teams can collaborate using Dockerfiles, which encapsulate all configuration details, fostering a DevOps culture and ensuring consistent environments across all stages.
+If a container fails, it can be effortlessly replaced, ensuring minimal downtime. Developers and operations teams can collaborate using Dockerfiles, which contains  all configuration details, fostering a DevOps culture and ensuring consistent environments across all stages.
 
