@@ -86,7 +86,81 @@ Docker Container → A cake 🎂 baked using that recipe.
 
 You can make multiple cakes (containers) from the same recipe (image). If a cake is eaten (container is deleted), you can always bake a new one using the recipe.
 
+---
 
+## Docker Registries
+
+How do we actually get these images to run containers from?  
+Docker registries is a storage and distribution system for Docker images. Docker hosts one of the biggest Docker Registry called 'Docker Hub'.
+
+### Image Versioning
+
+Since technology is always changing, there will be updates to certain applications, which means there will be a new Docker image that will be created. Different Docker image versions are called image tags. Supported tags can be seen on Docker Hub.
+
+There is a special tag called 'latest' tag, which gets the latest, most recently released image from docker hub. If you don't specify the version, it will pull the latest version of the application.
+
+### How to pull an imge from Docker Hub
+
+The best practice is to pull a specific version from Docker Hub.
+
+Syntax: `docker pull {name}:{tag}` to pull an image from registry with specified version.
+
+Docker hub(docker.io) is the default location for pulling images from.
+
+After pulling, running `docker images` will show the image.
+
+### Running an Image 
+
+Execute `docker run {image_name}:{tag}`
+
+To check if it is running properly: `docker ps`
+
+You will notice that you cannot run this command on the same terminal as the logs are blocking the terminal. Ctrl + c will exit the container and the process will die. Running `docker ps` will show that it is not running anymore. To run the process while also not having it block the terminal, use the flag `-d` which stands for detach.
+
+`docker run -d nginx:1.27.4`
+
+However, if you still want to see logs, use: `docker logs {container_id}`
+
+---
+
+## Port Binding
+
+How do we access this container?
+
+### Container Port vs Host Port
+
+Applications within containers run in an **isolated Docker network**, which allows us to run the same app running on the same port multiple times. This means we cannot access it on our local computer browser.
+
+We need to first expose the container port to the host.(Port binding)
+
+We can find the port under the PORTS section is `docker ps`. 
+
+We can then tell Docker to bind that port to our local host via another port. This way we can access the container. This is done through an additional flag `-p`(publish).
+
+First, stop the current application by running `docker stop {container_id}`
+
+```bash
+docker run -d -p 9000:80 nginx:1.27.4`
+# docker run -d -p {new_port}:{port} {image_name}:{tag}
+```
+Only 1 service can run on a specific port on the host, so now no other service can run on port 9000.
+
+It is standard practice to use the same port on your host as container is using.
+
+---
+
+## Start and Stop Containers
+
+Whenever we execute `docker run` command, it creates a new container instead of re-using previous containers. Although if we run `docker ps` we do not see anything, that's why we need to use the `-a` flag: `docker ps -a` to show all containers including ones that aren't running.
+
+To re-use a container: `docker start {container_id}`
+Since it is hard to remember container id, we can assign containers names using the flag `--name`
+
+`docker run --name web-app -d -p 80:80 nginx:1.27.4`
+
+---
+
+## Pricate Docker Registries
 
 
 
