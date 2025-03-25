@@ -161,3 +161,30 @@ docker run --name web-app -d -p 80:80 nginx:1.27.4
 ---
 
 ## Dockerfile - Creating Own Images
+
+Companies will want to create custom images for their applications. After developing an application, how do we deploy it to the server for users to use? How do we package it on docker?
+
+We need to create a "definition" of how to build an image from our application. This definition is written in a file called **Dockerfile**, a text document that contains commands to assemble an image. Docker can then build an image by reading the instructions within the file.
+
+### Format of Dockerfile
+A Docker container runs in an isolated environment, usually based on a lightweight Linux OS, Dockerfiles start from a parent image or "base image", you choose the base image depending on which tools you need to have available.
+
+- FROM: Dockerfiles must begin with a FROM instruction.
+- RUN: will execute any command in a shell inside the container environment.
+- COPY: Copies files or directories from <src>(our local env) and adds them to the filesystem of the container at the path <dest>(container). While "RUN" is executed in the container, "COPY" is executed on the host.
+- WORKDIR: Sets the working directory for all following commands.
+- CMD: Only one CMD instruction is allowed per Dockerfile, and it defines the default command to run when the container starts, so its usually at the very end of the file.
+
+---
+
+## Build Image
+```bash
+docker build {path}
+# -t or --tag: Sets a name and optionally a tag in the "name:tag" format
+docker build -t {name:tag} {path}
+```
+
+
+
+
+
