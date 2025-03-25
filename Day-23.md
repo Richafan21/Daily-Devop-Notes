@@ -160,7 +160,9 @@ Since it is hard to remember container id, we can assign containers names using 
 
 ---
 
-## Pricate Docker Registries
+## Docker File - Creating Own Images
+
+
 
 
 
