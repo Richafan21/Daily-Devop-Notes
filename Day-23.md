@@ -6,10 +6,10 @@
 
 ## What is Docker?
 
-Docker is a virtualization software that greatly speeds up and eases the process of developing and deploying applications. 
+Docker is a virtualisation software that greatly speeds up and eases the process of developing and deploying applications. 
 This is done through packaging applications into a **container**.
 This container will contain all the necessities for the application to run, such as libraries, dependencies, configuration, system tools, and runtime.
-Essentially, a **container** is a standardized unit that has everything the application needs to run within it.  
+Essentially, a **container** is a standardised unit that has everything the application needs to run within it.  
 
 Having everything in a single Docker package makes it very portable and easy to share and distribute.
 
@@ -29,7 +29,7 @@ It will also take a lot of time; if your application requires 10 services, each 
 
 They have their own isolated environment and everything is packaged, so all the developer needs to do is start the service as a Docker Container using one simple Docker command.
 
-This command will be the same no matter what OS you are on. So Docker standardizes the process of running any service on a local dev environment.
+This command will be the same no matter what OS you are on. So Docker standardises the process of running any service on a local dev environment.
 
 You can also run different versions of the same application without any conflicts.
 
