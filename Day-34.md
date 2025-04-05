@@ -1,4 +1,4 @@
-# Kubernetes Service and Ingress
+# Kubernetes Access Management
 
 ## What is Kubernetes?
 - An open source container orchestration tool devevloped by Google
@@ -36,3 +36,11 @@ Usually your url should look like https://my-app.com, this is where Ingres comes
 Request will go to Ingres first and it will do the forwarding, and then route to your internal service.
 
 ![image](https://github.com/user-attachments/assets/63980978-3a90-4986-b66e-73499973505c)
+
+## Config Map
+Externalises configuration parameters from application code
+`kubectl create configmap`
+
+## Secrets
+Contains passwords and other important information that can be leaked.
+`kubectl create secret`
