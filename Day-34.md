@@ -32,8 +32,8 @@ Service or SVC is a Permanent IP address(end point) that can be attached to each
 Since you don't want your database to be accessible to public, you would create an internal service, but the IP address would look like 127.89....
 Usually your url should look like https://my-app.com, this is where Ingres comes in.
 
-## Ingres
-Request will go to Ingres first and it will do the forwarding, and then route to your internal service.
+## Ingress
+Request will go to Ingress first and it will do the forwarding, and then route to your internal service.
 
 ![image](https://github.com/user-attachments/assets/63980978-3a90-4986-b66e-73499973505c)
 
