@@ -57,7 +57,8 @@ trap 'echo "Error: Script failed on line $LINENO"' ERR
 Check for specific error codes:
 
 ```bash
-if ! some_command; then
+if ! some_command
+then
   case $? in
     1) echo "Error: Type 1" ;;
     2) echo "Error: Type 2" ;;
